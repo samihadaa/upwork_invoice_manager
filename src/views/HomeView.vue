@@ -7,7 +7,7 @@
         <span>There are 4 total invoices</span>
       </div>
       <div class="right flex">
-        <div @click="toggleFilterMenu" class="filter flex" ref="filter">
+        <div @click="toggleFilterMenu" class="filter flex">
           <span>Filter by status</span>
           <img src="@/assets/icon-arrow-down.svg" alt="">
           <ul v-show="filterMenu" class="filter-menu">
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: "Home",
   data(){
@@ -37,6 +38,15 @@ export default {
     }
   },
   components: {},
+  methods:{
+    ...mapMutations (['TOGGLE_INVOICE']),
+    newInvoice(){
+      this.TOGGLE_INVOICE();
+    },
+    toggleFilterMenu(){
+      this.filterMenu = !this.filterMenu;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -58,11 +68,10 @@ export default {
         }
       }
       .filter{
+        cursor: pointer;
         position: relative;
         margin-right: 40px;
-        span,img{
-          pointer-events: none;
-        }
+       
         img{
           margin-left: 12px;
           width: 9px;
@@ -90,12 +99,18 @@ export default {
         padding: 8px 10px;
         background-color: #7c5dfa;
         border-radius: 40px;
+
         .inner-button{
           margin-right: 8px;
           border-radius: 50%;
           padding: 8px;
           align-items: center;
           justify-content: center;
+          background-color: #fff;
+          img{
+            width: 10px;
+            height: 10px;
+          }
         }
       }
     }
